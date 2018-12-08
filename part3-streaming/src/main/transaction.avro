@@ -1,0 +1,32 @@
+{
+  "namespace": "com.icct.ais.sparkbootcamp",
+  "name": "transaction",
+  "type": "record",
+  "fields": [
+    {"name": "txtime", "type": {
+      "type": "long",
+      "format_as_time" : "unix_long",
+      "arg.properties": {
+        "iteration": { "start": 1, "step": 10}
+      }
+    }},
+    {"name": "txid", "type": {
+      "type": "string",
+      "arg.properties": {
+        "regex": "[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}"
+      }
+    }},
+    {"name": "userid", "type": {
+      "type": "string",
+      "arg.properties": {
+        "regex": "user_[1-9][0-9]?"
+      }
+    }},
+    {"name": "amount_cents", "type": {
+      "type": "string",
+      "arg.properties": {
+        "range": {"min" : 100, "max" : 20000}
+      }
+    }}
+  ]
+}
