@@ -246,3 +246,4 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.gitignore.io/api/java,scala,macos,maven,windows,eclipse,intellij+all
+/syntheticdata/

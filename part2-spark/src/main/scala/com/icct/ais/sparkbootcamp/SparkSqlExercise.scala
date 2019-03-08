@@ -1,8 +1,5 @@
 package com.icct.ais.sparkbootcamp
 
-
-package com.icct.ais.sparkbootcamp
-
 import org.apache.spark.sql._
 
 import org.apache.spark.sql.Row
@@ -29,7 +26,9 @@ object SparkSqlExercise {
     */
   def getSparkSession():SparkSession={
     //remember how to create a Spark Session, make it local and give it a name
-    val spark: SparkSession = SparkSession.{yourcodehere}.getOrCreate()
+    val spark: SparkSession = SparkSession.builder.
+    // yourcodehere.
+    getOrCreate()
     spark
   }
 
@@ -41,11 +40,12 @@ object SparkSqlExercise {
   def loadData (spark:SparkSession):Dataset[Row]={
     // Where did you put the data file? it is in the git project at <project root>/src/main/resources/syntheticdata.csv
 
-    val dataFile = "/path/to/your/data/syntheticdata.csv"
+    val dataFile = "/data/syntheticdata.csv"
     //use spark to read the csv, use the header row to define the schema
     //see the read method here https://spark.apache.org/docs/2.3.2/api/scala/index.html#org.apache.spark.sql.SparkSession
     // see the csv method here https://spark.apache.org/docs/2.3.2/api/scala/index.html#org.apache.spark.sql.DataFrameReader
-    val data :Dataset[Row] = ...yourcodehere
+    val data :Dataset[Row] = spark.read
+      //.yourcodehere
       .load(dataFile).sample(0.05D,1234567890L).cache
     data
   }
@@ -58,7 +58,8 @@ object SparkSqlExercise {
     * @return the number of distinct claim ids in the file
     */
   def getDistinctClaimIds(data:Dataset[Row]):Long= {
-    val clmids = data.select("CLM_ID").distinct.limit(10).cache
+    val clmids = data
+      //.yourcodehere
     clmids.count
   }
 
@@ -72,7 +73,8 @@ object SparkSqlExercise {
     */
   def getTop10Diagnosis(data:Dataset[Row]): List[Row] ={
     // hint how would you count the occurances in sql?
-    val groupedIcd9 = data.groupBy("ICD9_DGNS_CD_1").count.sort(desc("count")).limit(10).cache
+    val groupedIcd9 = data
+      //.yourcodehere.limit(10)
     val result = groupedIcd9.collectAsList().asScala.toList
     result
   }

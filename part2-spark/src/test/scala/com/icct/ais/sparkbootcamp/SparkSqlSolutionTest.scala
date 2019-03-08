@@ -5,7 +5,7 @@ import org.junit.Assert._
 import org.junit._
 
 @Test
-class SparkRDDExerciseTest {
+class SparkSqlSolutionTest {
 
   @Test
   def testOK() = {

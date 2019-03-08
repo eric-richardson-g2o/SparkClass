@@ -5,7 +5,7 @@ import org.apache.spark.{SparkConf, SparkContext}
 /**
   * @author ${user.name}
   */
-object SparkRDDExercise {
+object SparkRDDSolution {
 
   def foo(x: Array[String]) = x.foldLeft("")((a, b) => a + b)
 
@@ -16,7 +16,7 @@ object SparkRDDExercise {
 
     val dataFile = "/data/syntheticdata.csv"
     val lines = sc.textFile(dataFile).sample(false, 0.05D, 12345678L)
-    //wordcount
+
     val words= lines.flatMap(line => line.split("\\s+"))
     val wordPairs=words.map(word => (word,1L))
     val wordCount=wordPairs.reduceByKey((sum,value)=>sum+value)
@@ -27,32 +27,19 @@ object SparkRDDExercise {
     System.out.println
     System.out.println
 
-    //line count
-
-    //make line pairs
-    val pairs = lines
-      //.yourcodehere
-
-    // add up the all lines with the same key
-    val counts = pairs
-      //.yourcode here
-
-      // call an action to trigger the actual work...
-    val result = counts
-      //.yourcodehere
-
-    //how can you tell how many unique lines there are?
-    val uniqueLines = result
-        //.yourcodehere
-
+    val pairs = lines.map(s => (s, 1))
+    val counts = pairs.reduceByKey((a,b) => a + b)
+    val result = counts.collect
+    val uniqueLines = result.size
     val totalLines = lines.count
-
-
+    //lines.unpersist();
     System.out.println
     System.out.println
     System.out.println("TotalLines: " + totalLines + ", uniqueLines: " + uniqueLines)
     System.out.println
     System.out.println
+
+
 
     sc.stop
   }
